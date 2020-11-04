@@ -10,8 +10,7 @@ class CustomerSuccessBalancing
 
   # Returns the id of the CustomerSuccess with the most customers
   def execute
-    # Write your solution here
-    nil
+    css_availables = @customer_success.delete_if{|item| @customer_success_away.include?(item[:id])
   end
 end
 
