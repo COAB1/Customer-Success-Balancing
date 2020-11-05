@@ -1,5 +1,4 @@
-## CustomerSuccess Balancing
-
+## Customer Success Balancing
 
 Este desafio consiste em um sistema de balanceamento entre clientes e Customer Success (CSs). Os CSs são os Gerentes de Sucesso, são responsáveis pelo acompanhamento estratégico dos clientes.
 
