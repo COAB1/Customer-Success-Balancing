@@ -10,11 +10,30 @@ class CustomerSuccessBalancing
 
   # Returns the id of the CustomerSuccess with the most customers
   def execute
-    css_availables = @customer_success.delete_if{|item| @customer_success_away.include?(item[:id])}
+    css_availables = css.delete_if{|item| customer_success_away.include?(item[:id])}
 
-    css_available_sorted = css_availables.sort_by{|cs| cs[:score]}
-    customers_sorted = @customers.sort_by{|customer| customer[:score]}
-      
+    css_availables.sort_by!{|cs| cs[:score]}
+
+    css_clients = 0
+
+    customers_by_css_id = {}
+    
+    customers.each do |customer|
+      css_availables.each do |cs|
+        if customer[:score] <= cs[:score]
+          customers_by_css_id[cs[:id]] ||= []
+          customers_by_css_id[cs[:id]] << customer[:id]
+          #puts "matched customer #{customer[:id]} with css #{cs[:id]}"
+          break
+        end
+      end
+    end
+    
+    # customers_by_css_id.each do |id, customers|
+    puts customers_by_css_id
+    max_customer = customers_by_css_id.max_by { |css_customer_list| css_customer_list[1].count }
+    puts "max id: #{max_customer.first}"
+    
   end
 end
 
