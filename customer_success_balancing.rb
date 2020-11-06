@@ -14,8 +14,6 @@ class CustomerSuccessBalancing
 
     css_availables.sort_by!{|cs| cs[:score]}
 
-    css_clients = 0
-
     customers_by_css_id = {}
     
     customers.each do |customer|
@@ -23,16 +21,13 @@ class CustomerSuccessBalancing
         if customer[:score] <= cs[:score]
           customers_by_css_id[cs[:id]] ||= []
           customers_by_css_id[cs[:id]] << customer[:id]
-          #puts "matched customer #{customer[:id]} with css #{cs[:id]}"
           break
         end
       end
     end
     
-    # customers_by_css_id.each do |id, customers|
-    puts customers_by_css_id
     max_customer = customers_by_css_id.max_by { |css_customer_list| css_customer_list[1].count }
-    puts "max id: #{max_customer.first}"
+    max_customer.first
     
   end
 end
