@@ -10,13 +10,13 @@ class CustomerSuccessBalancing
 
   # Returns the id of the CustomerSuccess with the most customers
   def execute
-    css_availables = css.delete_if{|item| customer_success_away.include?(item[:id])}
+    css_availables = @customer_success.delete_if{|item| @customer_success_away.include?(item[:id])}
 
     css_availables.sort_by!{|cs| cs[:score]}
 
     customers_by_css_id = {}
     
-    customers.each do |customer|
+    @customers.each do |customer|
       css_availables.each do |cs|
         if customer[:score] <= cs[:score]
           customers_by_css_id[cs[:id]] ||= []
@@ -27,8 +27,7 @@ class CustomerSuccessBalancing
     end
     
     max_customer = customers_by_css_id.max_by { |css_customer_list| css_customer_list[1].count }
-    max_customer.first
-    
+    max_customer.first    
   end
 end
 
@@ -53,7 +52,7 @@ class CustomerSuccessBalancingTests < Minitest::Test
     customer_success[998] = 100
 
     customers = Array.new(10000, 10)
-    
+
     balancer = CustomerSuccessBalancing.new(array_to_map(customer_success), array_to_map(customers), [1000])
 
     result = Timeout.timeout(1.0) { balancer.execute }
@@ -87,4 +86,4 @@ class CustomerSuccessBalancingTests < Minitest::Test
   end
 end
 
-Minitest.run
+Minitest.run 
